@@ -87,7 +87,8 @@ def create_f16gvt_datasets(seq_len_train=None, seq_len_val=None, seq_len_test=No
 
 def maybe_download_and_extract(mat_file_path):
     """Download the data from nonlinear benchmark website, unless it's already here."""
-    src_url = 'http://nonlinearbenchmark.org/FILES/BENCHMARKS/F16/F16GVT_Files.zip'
+    #src_url = 'http://nonlinearbenchmark.org/FILES/BENCHMARKS/F16/F16GVT_Files.zip'
+    src_url = 'https://data.4tu.nl/file/b6dc643b-ecc6-437c-8a8a-1681650ec3fe/5414dfdc-6e8d-4208-be6e-fa553de9866f'
     home = Path.home()
     work_dir = str(home.joinpath('datasets/F16Gvt'))
     if not os.path.exists(work_dir):

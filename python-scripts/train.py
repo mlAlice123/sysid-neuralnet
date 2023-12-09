@@ -64,7 +64,7 @@ def run_train(start_epoch, cuda, modelstate, logdir, loader_train, loader_valid,
         all_losses = []
         all_vlosses = []
         best_vloss = vloss
-        start_time = time.clock()
+        start_time = time.perf_counter()
         for epoch in range(start_epoch, start_epoch + train_options["epochs"]+1):
             # Train and validate
             train(epoch)
@@ -75,7 +75,7 @@ def run_train(start_epoch, cuda, modelstate, logdir, loader_train, loader_valid,
             all_vlosses += [vloss]
             if vloss < best_vloss:
                 best_vloss = vloss
-                modelstate.save_model(epoch, best_vloss, time.clock() - start_time, logdir, 'best_model.pt')
+                modelstate.save_model(epoch, best_vloss, time.perf_counter() - start_time, logdir, 'best_model.pt')
 
             # Extract learning rate
             lr = modelstate.optimizer.param_groups[0]["lr"]
@@ -94,9 +94,9 @@ def run_train(start_epoch, cuda, modelstate, logdir, loader_train, loader_valid,
             # Early stoping
             if lr < train_options['min_lr']:
                 break
-        modelstate.save_model(epoch, vloss, time.clock() - start_time, logdir, 'final_model.pt')
+        modelstate.save_model(epoch, vloss, time.perf_counter() - start_time, logdir, 'final_model.pt')
     except KeyboardInterrupt:
         print('-' * 89)
         print('Exiting from training early')
-        modelstate.save_model(epoch, vloss, time.clock() - start_time, logdir, 'interrupted_model.pt')
+        modelstate.save_model(epoch, vloss, time.perf_counter() - start_time, logdir, 'interrupted_model.pt')
         print('-' * 89)
